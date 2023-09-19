@@ -6,8 +6,12 @@ title: owl-webtoon front section readme
 
 ## Packages
 
--   [Chakra UI](https://chakra-ui.com)
--   []
+- [Chakra UI](https://chakra-ui.com)
+- []
+
+## Assets
+
+- [LogoImage](https://unsplash.com/ko/%EC%82%AC%EC%A7%84/Jrtqo2t0J_g)
 
 ## React
 

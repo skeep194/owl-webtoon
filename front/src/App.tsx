@@ -1,15 +1,18 @@
 import React from "react";
-import { Center, Container, Text } from "@chakra-ui/react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import HomePage from "pages/Home";
 
 function App() {
   return (
-    <Center>
-      <Container width={"container.md"}>
-        <Center>
-          <Text>Hello, world!</Text>
-        </Center>
-      </Container>
-    </Center>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path={"/"} element={<HomePage />} />
+          <Route path={"*"} element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
