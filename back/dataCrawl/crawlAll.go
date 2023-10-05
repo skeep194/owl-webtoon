@@ -1,0 +1,5 @@
+package dataCrawl
+
+func Crawl() {
+
+}
