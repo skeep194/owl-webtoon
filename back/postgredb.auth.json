@@ -1,0 +1,7 @@
+{
+    "dbname": "owl_webtoon",
+    "username" : "owl",
+    "password" : "owlowl",
+    "hostname" : "127.0.0.1",
+    "port" : "5432"
+}

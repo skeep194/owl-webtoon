@@ -1,14 +1,10 @@
 package webtoon
 
-import (
-	"context"
-)
+import "owl-webtoon/database"
 
-func InsertWebtoonEntity(w WebtoonEntity) error {
-	db, err := getWebtoonCollection()
-	if err != nil {
-		return err
-	}
-	_, err = db.InsertOne(context.TODO(), w)
-	return err
+func GetWebtoonByTitle(title string) Webtoon {
+	w := Webtoon{Title: title}
+
+	database.PostgreDB.Where("title = ?", title).First(&w)
+	return w
 }
