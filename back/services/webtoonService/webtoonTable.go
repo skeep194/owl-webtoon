@@ -1,4 +1,4 @@
-package webtoon
+package webtoonService
 
 import (
 	"owl-webtoon/database"

@@ -3,7 +3,7 @@ package dataCrawl
 import (
 	"fmt"
 	"net/url"
-	"owl-webtoon/services/webtoon"
+	"owl-webtoon/services/webtoonService"
 	"strconv"
 	"time"
 
@@ -46,7 +46,7 @@ func (naver naverWebtoonCrawller) getWebtoonURLs(path string) (ret []string, err
 //webtoon main page to webtoon instance.
 //example path
 //list?titleId=26460
-func (naver naverWebtoonCrawller) getWebtoonInfo(path string, webtoonType naverWebtoonType) (ret webtoon.Webtoon, err error) {
+func (naver naverWebtoonCrawller) getWebtoonInfo(path string, webtoonType naverWebtoonType) (ret webtoonService.Webtoon, err error) {
 	URL, err := url.Parse(baseURL + path)
 	if err != nil {
 		return ret, errors.Wrap(err, "invalid url")
@@ -66,7 +66,7 @@ func (naver naverWebtoonCrawller) getWebtoonInfo(path string, webtoonType naverW
 	ret.SiteID = m["titleId"][0]
 
 	//set Vendor
-	ret.Vendor = webtoon.Naver
+	ret.Vendor = webtoonService.Naver
 
 	//set Title
 	ret.Title = naver.document.Selection.Find("div.area_info strong.title").Text()
@@ -141,7 +141,7 @@ func (naver naverWebtoonCrawller) getFinishPageCount() (ret int, err error) {
 
 //TODO: need error logging.
 //temporarily error is ignored
-func (naver naverWebtoonCrawller) getWebtoonInfos() (ret []webtoon.Webtoon, err error) {
+func (naver naverWebtoonCrawller) getWebtoonInfos() (ret []webtoonService.Webtoon, err error) {
 	finishPageCount, err := naver.getFinishPageCount()
 	var paths = []string{"mon", "tue", "wed", "thu", "fri", "sat", "sun", "dailyPlus"}
 	dayCount := len(paths)
@@ -178,7 +178,7 @@ func (naver naverWebtoonCrawller) getWebtoonInfos() (ret []webtoon.Webtoon, err 
 	}
 	//get webtoon information from all URL
 	for i, URL := range URLs {
-		var w webtoon.Webtoon
+		var w webtoonService.Webtoon
 		w, err = naver.getWebtoonInfo(URL, webtoonTypes[i])
 		if err != nil {
 			err = errors.Wrap(err, "fail to get webtoon info "+URL)

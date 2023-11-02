@@ -1,4 +1,4 @@
-package webtoon
+package webtoonService
 
 import (
 	"owl-webtoon/database"
@@ -6,11 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func GetWebtoonByTitle(title string) Webtoon {
-	w := Webtoon{Title: title}
+func GetWebtoons(title string, vendor WebtoonPlatform) (ret []Webtoon) {
+	w := Webtoon{Title: title, Vendor: vendor}
 
-	database.PostgreDB.Where("title = ?", title).First(&w)
-	return w
+	database.PostgreDB.Where(&w).Find(&ret)
+	return ret
 }
 
 func getWebtoonIdByTitleAndVendor(title string, vendor WebtoonPlatform) uuid.UUID {

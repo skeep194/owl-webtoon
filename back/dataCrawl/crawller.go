@@ -3,7 +3,7 @@ package dataCrawl
 import (
 	"net/http"
 
-	"owl-webtoon/services/webtoon"
+	"owl-webtoon/services/webtoonService"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/pkg/errors"
@@ -21,7 +21,7 @@ type staticCrawller struct {
 }
 
 type Crawller interface {
-	getWebtoonInfos() ([]webtoon.Webtoon, error)
+	getWebtoonInfos() ([]webtoonService.Webtoon, error)
 }
 
 func newStaticCrawller(URL string) (*staticCrawller, error) {
