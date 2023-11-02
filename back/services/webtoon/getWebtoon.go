@@ -13,7 +13,7 @@ func GetWebtoonByTitle(title string) Webtoon {
 	return w
 }
 
-func GetWebtoonIdByTitleAndVendor(title string, vendor WebtoonPlatform) uuid.UUID {
+func getWebtoonIdByTitleAndVendor(title string, vendor WebtoonPlatform) uuid.UUID {
 	w := Webtoon{}
 
 	database.PostgreDB.Where("title = ? AND vendor = ?", title, vendor).Find(&w)
