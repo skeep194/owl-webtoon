@@ -4,6 +4,8 @@ import (
 	"owl-webtoon/database"
 )
 
-func InsertWebtoonOne(w Webtoon) {
-	database.PostgreDB.Create(&w)
+func InsertWebtoonMany(webtoons []Webtoon) {
+	for _, webtoon := range webtoons {
+		database.PostgreDB.Save(&webtoon)
+	}
 }

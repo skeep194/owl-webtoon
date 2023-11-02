@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"owl-webtoon/services/webtoon"
+	"owl-webtoon/dataCrawl"
 )
 
 func main() {
 	// webtoon.InsertWebtoonOne(webtoon.Webtoon{Title: "test", Vendor: "kakao"})
-	fmt.Println(webtoon.GetWebtoonByTitle("test"))
+	// fmt.Println(webtoon.GetWebtoonIdByTitleAndVendor("ad", webtoon.Kakao))
+	dataCrawl.Crawl()
 }
