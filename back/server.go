@@ -1,7 +1,9 @@
 package main
 
-import "owl-webtoon/dataCrawl"
+import (
+	"owl-webtoon/cron"
+)
 
 func main() {
-	dataCrawl.Crawl()
+	cron.CrawlPerOneDay()
 }
