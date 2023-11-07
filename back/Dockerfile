@@ -1,5 +1,5 @@
-FROM golang:1.18.1
+FROM ubuntu:22.04
 WORKDIR /
 EXPOSE 3000
-COPY . .
-CMD ["go", "run", "main.go"]
+COPY ./bin/owl_webtoon /bin/owl_webtoon
+CMD ["owl_webtoon"]

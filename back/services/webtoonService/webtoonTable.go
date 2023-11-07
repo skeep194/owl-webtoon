@@ -1,8 +1,6 @@
 package webtoonService
 
 import (
-	"io/ioutil"
-	"os"
 	"owl-webtoon/database"
 	"time"
 
@@ -58,11 +56,12 @@ type Webtoon struct {
 }
 
 func init() {
-	//TODO: sql 파일이 여러개 있을 때도 처리해야함
-	sql, _ := os.Open("./services/webtoonService/vendor_enum.sql")
-	data, _ := ioutil.ReadAll(sql)
-	s := string(data[:])
-
-	database.PostgreDB.Exec(s)
+	database.PostgreDB.Exec(`
+		DO $$ BEGIN
+		CREATE TYPE vendor AS ENUM ('naver', 'kakao');
+		EXCEPTION
+			WHEN duplicate_object THEN null;
+		END $$;
+	`)
 	database.PostgreDB.AutoMigrate(&Webtoon{})
 }

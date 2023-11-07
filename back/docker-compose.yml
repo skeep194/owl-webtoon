@@ -1,5 +1,25 @@
 version: '3.7'
 services:
+  owl-webtoon-backend:
+    image: ubuntu:22.04
+    ports:
+      - "${OWL_BACK_PORT}:3000"
+    depends_on:
+      owl-webtoon-build:
+        condition: service_completed_successfully
+      owl-webtoon-db:
+        condition: service_started
+        restart: true
+    environment:
+      - DB_HOST_NAME=host.docker.internal
+      - DB_USER_NAME=${OWL_DB_USER_NAME}
+      - DB_PASSWORD=${OWL_DB_PASSWORD}
+      - DB_DATABASE=${OWL_DB_DATABASE}
+      - DB_PORT=${OWL_DB_PORT}
+    command: ['owl_webtoon']
+    working_dir: /bin
+    volumes:
+      - ./bin:/bin
   owl-webtoon-db:
     image: postgres:16
     ports:
@@ -12,13 +32,10 @@ services:
     volumes:
       - $HOME/owl-data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
-  owl-webtoon-backend:
-    build: .
-    ports:
-      - "${OWL_BACK_PORT}:3000"
-    environment:
-      - DB_HOST_NAME=host.docker.internal
-      - DB_USER_NAME=${OWL_DB_USER_NAME}
-      - DB_PASSWORD=${OWL_DB_PASSWORD}
-      - DB_DATABASE=${OWL_DB_DATABASE}
-      - DB_PORT=${OWL_DB_PORT}
+  owl-webtoon-build:
+    image: golang:1.18.1
+    working_dir: /owl
+    command: ['bash', '/owl/build.sh']
+    volumes:
+      - .:/owl
+  
