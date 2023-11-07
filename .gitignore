@@ -1,1 +1,3 @@
-./back/postgredb.auth.json
+.env
+/back/bin
+/back/docs
