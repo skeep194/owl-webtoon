@@ -1,1 +1,0 @@
-CREATE TYPE vendor AS ENUM ('naver', 'kakao');

@@ -1,0 +1,96 @@
+basePath: /api/v1
+definitions:
+  webtoonService.Webtoon:
+    description: Webtoon information
+    properties:
+      create_date:
+        description: 1화 연재 날짜
+        example: "2015-05-17T09:00:00+09:00"
+        type: string
+      episode_count:
+        description: 총 화수
+        example: 391
+        type: integer
+      is_complete:
+        description: 완결 여부
+        example: false
+        type: boolean
+      is_vacation:
+        description: 휴재 중인 경우 true
+        example: false
+        type: boolean
+      likes:
+        description: 부엉이 웹툰에서의 좋아요 수(각 웹툰사와 관계없음)
+        example: 2
+        type: integer
+      link_domain:
+        description: baseURL을 제외한 웹툰 링크
+        example: /webtoon/list?titleId=654774&week=mon
+        type: string
+      site_id:
+        description: 각 웹툰 사이트가 자체적으로 부여한 웹툰 id값
+        example: "654774"
+        type: string
+      title:
+        description: 웹툰 제목
+        example: 소녀의 세계
+        type: string
+      update_date:
+        description: 최신화 업데이트 날짜
+        example: "2023-10-29T09:00:00+09:00"
+        type: string
+      upload_date:
+        description: data represent as bitmask monday = 2^0, .. sunday = 2^6, irregular
+          = 2^7 if all bit has zero(we assume that value is 0), webtoon is complete
+          and no longer update.
+        example: 1
+        type: integer
+      vendor:
+        allOf:
+        - $ref: '#/definitions/webtoonService.WebtoonPlatform'
+        description: 웹툰 배급사
+        example: naver
+    type: object
+  webtoonService.WebtoonPlatform:
+    enum:
+    - naver
+    - kakao
+    type: string
+    x-enum-varnames:
+    - Naver
+    - Kakao
+host: 34.64.107.125
+info:
+  contact: {}
+  description: 부엉이는 부엉부엉하고 울어요
+  title: owl-webtoon API
+  version: "1.0"
+paths:
+  /webtoon:
+    get:
+      consumes:
+      - application/json
+      description: 크롤링된 웹툰 정보를 보여줍니다. title 혹은 vendor 가 있으면 매칭되는 웹툰 정보만 보여줍니다.
+      parameters:
+      - description: title 일치하는 웹툰 정보
+        in: query
+        name: title
+        type: string
+      - description: 배급사가 vendor인 웹툰들 정보
+        enum:
+        - naver
+        - kakao
+        in: query
+        name: vendor
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: list of matched webtoon
+          schema:
+            items:
+              $ref: '#/definitions/webtoonService.Webtoon'
+            type: array
+      summary: Get webtoon information
+swagger: "2.0"

@@ -1,0 +1,132 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "부엉이는 부엉부엉하고 울어요",
+        "title": "owl-webtoon API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "34.64.107.125",
+    "basePath": "/api/v1",
+    "paths": {
+        "/webtoon": {
+            "get": {
+                "description": "크롤링된 웹툰 정보를 보여줍니다. title 혹은 vendor 가 있으면 매칭되는 웹툰 정보만 보여줍니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get webtoon information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "title 일치하는 웹툰 정보",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "naver",
+                            "kakao"
+                        ],
+                        "type": "string",
+                        "description": "배급사가 vendor인 웹툰들 정보",
+                        "name": "vendor",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "list of matched webtoon",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/webtoonService.Webtoon"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "webtoonService.Webtoon": {
+            "description": "Webtoon information",
+            "type": "object",
+            "properties": {
+                "create_date": {
+                    "description": "1화 연재 날짜",
+                    "type": "string",
+                    "example": "2015-05-17T09:00:00+09:00"
+                },
+                "episode_count": {
+                    "description": "총 화수",
+                    "type": "integer",
+                    "example": 391
+                },
+                "is_complete": {
+                    "description": "완결 여부",
+                    "type": "boolean",
+                    "example": false
+                },
+                "is_vacation": {
+                    "description": "휴재 중인 경우 true",
+                    "type": "boolean",
+                    "example": false
+                },
+                "likes": {
+                    "description": "부엉이 웹툰에서의 좋아요 수(각 웹툰사와 관계없음)",
+                    "type": "integer",
+                    "example": 2
+                },
+                "link_domain": {
+                    "description": "baseURL을 제외한 웹툰 링크",
+                    "type": "string",
+                    "example": "/webtoon/list?titleId=654774\u0026week=mon"
+                },
+                "site_id": {
+                    "description": "각 웹툰 사이트가 자체적으로 부여한 웹툰 id값",
+                    "type": "string",
+                    "example": "654774"
+                },
+                "title": {
+                    "description": "웹툰 제목",
+                    "type": "string",
+                    "example": "소녀의 세계"
+                },
+                "update_date": {
+                    "description": "최신화 업데이트 날짜",
+                    "type": "string",
+                    "example": "2023-10-29T09:00:00+09:00"
+                },
+                "upload_date": {
+                    "description": "data represent as bitmask monday = 2^0, .. sunday = 2^6, irregular = 2^7 if all bit has zero(we assume that value is 0), webtoon is complete and no longer update.",
+                    "type": "integer",
+                    "example": 1
+                },
+                "vendor": {
+                    "description": "웹툰 배급사",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/webtoonService.WebtoonPlatform"
+                        }
+                    ],
+                    "example": "naver"
+                }
+            }
+        },
+        "webtoonService.WebtoonPlatform": {
+            "type": "string",
+            "enum": [
+                "naver",
+                "kakao"
+            ],
+            "x-enum-varnames": [
+                "Naver",
+                "Kakao"
+            ]
+        }
+    }
+}
