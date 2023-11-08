@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"owl-webtoon/cron"
 	"owl-webtoon/router"
 )
@@ -12,6 +13,7 @@ import (
 // @host 34.64.107.125
 // @BasePath /api/v1
 func main() {
+	fmt.Println("server start!!!")
 	cron.CrawlPerOneDay()
 	router.RouteAll()
 }

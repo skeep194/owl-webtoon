@@ -11,11 +11,11 @@ services:
         condition: service_started
         restart: true
     environment:
-      - DB_HOST_NAME=host.docker.internal
+      - DB_HOST_NAME=owl-webtoon-db
       - DB_USER_NAME=${OWL_DB_USER_NAME}
       - DB_PASSWORD=${OWL_DB_PASSWORD}
       - DB_DATABASE=${OWL_DB_DATABASE}
-      - DB_PORT=${OWL_DB_PORT}
+      - DB_PORT=5432
     command: ['owl_webtoon']
     working_dir: /bin
     volumes:
@@ -30,7 +30,7 @@ services:
       - POSTGRES_DB=${OWL_POSTGRES_DB}
       - OWL_DB_PASSWORD=${OWL_DB_PASSWORD}
     volumes:
-      - $HOME/owl-data:/var/lib/postgresql/data
+      - ./owl-data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
   owl-webtoon-build:
     image: golang:1.18.1
