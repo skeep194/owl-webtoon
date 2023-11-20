@@ -1,6 +1,7 @@
 package cron
 
 import (
+	"fmt"
 	"owl-webtoon/dataCrawl"
 	"time"
 
@@ -8,7 +9,9 @@ import (
 )
 
 func CrawlPerOneDay() {
+	fmt.Println("cron")
 	scheduler := gocron.NewScheduler(time.Local)
-	scheduler.Every(1).Day().At("00:30").Do(dataCrawl.Crawl)
+	scheduler.SingletonModeAll()
+	scheduler.Every(1).Days().DoWithJobDetails(dataCrawl.Crawl)
 	scheduler.StartAsync()
 }

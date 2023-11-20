@@ -25,9 +25,9 @@ const (
 
 const baseURL string = "https://m.comic.naver.com"
 
-//webtoon weekday or finish page to webtoon URL.
-//example path
-//weekday?week=wed
+// webtoon weekday or finish page to webtoon URL.
+// example path
+// weekday?week=wed
 func (naver naverWebtoonCrawller) getWebtoonURLs(path string) (ret []string, err error) {
 	naver.staticCrawller, err = newStaticCrawller(baseURL + "/webtoon/" + path)
 	if err != nil {
@@ -43,9 +43,9 @@ func (naver naverWebtoonCrawller) getWebtoonURLs(path string) (ret []string, err
 	return ret, nil
 }
 
-//webtoon main page to webtoon instance.
-//example path
-//list?titleId=26460
+// webtoon main page to webtoon instance.
+// example path
+// list?titleId=26460
 func (naver naverWebtoonCrawller) getWebtoonInfo(path string, webtoonType naverWebtoonType) (ret webtoonService.Webtoon, err error) {
 	URL, err := url.Parse(baseURL + path)
 	if err != nil {
@@ -139,10 +139,11 @@ func (naver naverWebtoonCrawller) getFinishPageCount() (ret int, err error) {
 	return ret, nil
 }
 
-//TODO: need error logging.
-//temporarily error is ignored
+// TODO: need error logging.
+// temporarily error is ignored
 func (naver naverWebtoonCrawller) getWebtoonInfos() (ret []webtoonService.Webtoon, err error) {
 	finishPageCount, err := naver.getFinishPageCount()
+	fmt.Printf("finish page %d", finishPageCount)
 	var paths = []string{"mon", "tue", "wed", "thu", "fri", "sat", "sun", "dailyPlus"}
 	dayCount := len(paths)
 	for i := 1; i <= finishPageCount; i++ {
