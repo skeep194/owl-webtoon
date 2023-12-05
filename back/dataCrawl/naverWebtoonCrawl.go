@@ -108,6 +108,18 @@ func (naver naverWebtoonCrawller) getWebtoonInfo(path string, webtoonType naverW
 		return ret, errors.Wrap(err, "convert to int "+find)
 	}
 
+	//set ImageLink
+	find, isExist := naver.document.Find(`meta[property="og:image"]`).Attr("content")
+	if isExist {
+		ret.ImageLink = find
+	}
+
+	//set Description
+	find, isExist = naver.document.Find(`meta[property="og:description"]`).Attr("content")
+	if isExist {
+		ret.Description = find
+	}
+
 	//set LinkDomain
 	ret.LinkDomain = path
 

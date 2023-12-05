@@ -53,6 +53,10 @@ type Webtoon struct {
 	EpisodeCount int `json:"episode_count" example:"391"`
 	//baseURL을 제외한 웹툰 링크
 	LinkDomain string `json:"link_domain" example:"/webtoon/list?titleId=654774\u0026week=mon"`
+	//웹툰 이미지 링크
+	ImageLink string `json:"image_link" example:"https://shared-comic.pstatic.net/thumb/webtoon/142910/thumbnail/thumbnail_IMAG19_migrated_142910.jpg"`
+	//웹툰 description
+	Description string `json:"description" example:"배려심 제로의 소심쟁이 남편 메가쑈킹만화가와 습관성 울컥증에 최강의 식탐을 지닌 아내 금보. 다시 돌아온 그들의 요절복통 도보하이킹 대장정"`
 }
 
 func init() {

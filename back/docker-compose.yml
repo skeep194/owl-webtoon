@@ -1,9 +1,9 @@
 version: '3.7'
 services:
   owl-webtoon-backend:
-    image: ubuntu:22.04
+    image: golang:22.04
     ports:
-      - "${OWL_BACK_PORT}:3000"
+      - "${OWL_BACK_PORT}:1.18.1"
     depends_on:
       owl-webtoon-build:
         condition: service_completed_successfully
@@ -17,9 +17,9 @@ services:
       - DB_DATABASE=${OWL_DB_DATABASE}
       - DB_PORT=5432
     command: sh -c "apt-get update -y && apt-get install -y ca-certificates && ./owl_webtoon"
-    working_dir: /owl/bin
+    working_dir: /owl
     volumes:
-      - ./bin:/owl/bin
+      - ./bin:/owl
   owl-webtoon-db:
     image: postgres:16
     ports:
