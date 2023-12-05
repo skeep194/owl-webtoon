@@ -1,9 +1,9 @@
 version: '3.7'
 services:
   owl-webtoon-backend:
-    image: golang:22.04
+    image: golang:1.18.1
     ports:
-      - "${OWL_BACK_PORT}:1.18.1"
+      - "${OWL_BACK_PORT}:3000"
     depends_on:
       owl-webtoon-build:
         condition: service_completed_successfully
